@@ -22,6 +22,7 @@ from neuraxle_tensorflow.tensorflow_v1 import TensorflowV1ModelStep
 from neuraxle_tensorflow.tensorflow_v2 import Tensorflow2ModelStep
 from plotting import plot_metrics
 from steps import MeanStdNormalizer, ToNumpy, PlotPredictionsWrapper
+import numpy as np
 
 
 def create_model(step: Tensorflow2ModelStep) -> tf.keras.Model:
@@ -148,6 +149,15 @@ def create_optimizer(step: TensorflowV1ModelStep) -> AdamOptimizer:
 def main(chosen_device):
     exercice_number = 1
     print('exercice {}\n=================='.format(exercice_number))
+    temp1 = np.load("input_histograms.npy")
+    temp2 = np.load("output_histograms.npy")
+    temp1 = np.expand_dims(temp1, 2)
+    temp2 = np.expand_dims(temp2, 2)
+    print(temp1.shape)
+    print(temp2.shape)
+    
+
+    
 
     data_inputs, expected_outputs = generate_data(
         # See: https://github.com/guillaume-chevalier/seq2seq-signal-prediction/blob/master/datasets.py
@@ -156,6 +166,11 @@ def main(chosen_device):
         window_size_past=None,
         window_size_future=None
     )
+    data_inputs = temp1
+    expected_outputs = temp2
+
+    print(data_inputs.shape)
+    
 
     print('data_inputs shape: {} => (n_samples, window_size_past, input_dim)'.format(data_inputs.shape))
     print('expected_outputs shape: {} => (n_samples, window_size_future, output_dim)'.format(expected_outputs.shape))

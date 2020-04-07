@@ -93,3 +93,4 @@ ___*
 neuraxle_tensorflow/*
 .idea/*
 *.png
+*.npy
